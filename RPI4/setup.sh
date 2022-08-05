@@ -8,14 +8,14 @@ sudo apt-get install gstreamer-1.0 \
     libgstreamer-plugins-base1.0-dev \
     libgstrtspserver-1.0-dev -y
 
-cd ~/services
-sudo cp *.service /lib/systemd/system/
+sudo cp services/*.service /lib/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable rtsp-client
 sudo systemctl enable rtsp-simple-server
 #sudo systemctl enable telem-proxy
 sudo systemctl enable tmux-server
 
+mkdir ~/bin
 cd ~/bin
 wget https://github.com/aler9/rtsp-simple-server/releases/download/v0.19.3/rtsp-simple-server_v0.19.3_linux_arm64v8.tar.gz
 tar xvfz rtsp-simple-server_v0.19.3_linux_arm64v8.tar.gz
