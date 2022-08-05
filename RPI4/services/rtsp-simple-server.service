@@ -1,7 +1,7 @@
 [Unit]
 Wants=network.target
 [Service]
-ExecStart=/home/odroid/rtsp-simple-server /home/odroid/rtsp-simple-server.yml
-User=odroid
+ExecStart=/home/pi/bin/rtsp-simple-server /home/pi/conf/rtsp-simple-server.yml
+User=pi
 [Install]
 WantedBy=multi-user.target

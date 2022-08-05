@@ -7,8 +7,8 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-User=odroid
-ExecStart=/bin/sh /home/odroid/rtsp-client.sh
+User=pi
+ExecStart=/bin/sh /home/pi/bin/rtsp-client.sh
 Restart=on-failure
 ExecStop=/bin/kill -s HUP $MAINPID
 
