@@ -1,0 +1,7 @@
+[Unit]
+Wants=network.target
+[Service]
+ExecStart=/home/odroid/rtsp-simple-server /home/odroid/rtsp-simple-server.yml
+User=odroid
+[Install]
+WantedBy=multi-user.target

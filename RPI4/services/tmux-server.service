@@ -1,0 +1,19 @@
+[Unit]
+Description=tmux server
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=
+ExecStart=/home/pi/bin/run-tmux.sh
+ExecStartPost=
+ExecStop=/usr/bin/tmux kill-server
+ExecReload=
+User=pi
+KillMode=none
+
+[Install]
+WantedBy=multi-user.target

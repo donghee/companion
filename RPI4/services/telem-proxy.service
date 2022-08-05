@@ -1,0 +1,15 @@
+
+[Unit]
+Description=Telemetry Proxy Service
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/usr/bin/python3 /home/pi/.local/bin/mavproxy.py --master=/dev/ttyS0 --baudrate 921600 --out=tcpin:0.0.0.0:5760 --cmd="set flushlogs True" --state-basedir="/home/pi/" --daemon
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

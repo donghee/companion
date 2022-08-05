@@ -1,0 +1,16 @@
+
+[Unit]
+Description=RTSP Stream Cam
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=odroid
+ExecStart=/bin/sh /home/odroid/rtsp-client.sh
+Restart=on-failure
+ExecStop=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
