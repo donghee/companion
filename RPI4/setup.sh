@@ -10,7 +10,7 @@ sudo apt-get install gstreamer-1.0 \
 
 sudo cp services/*.service /lib/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable rtsp-client
+#sudo systemctl enable rtsp-client
 sudo systemctl enable rtsp-simple-server
 #sudo systemctl enable telem-proxy
 sudo systemctl enable tmux-server
