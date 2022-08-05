@@ -28,4 +28,4 @@ chmod +x ttyd.arm
 cd ~/
 
 # rtsp-simple-server
-cp -Rf companion/conf ~/
+cp -Rf companion/RPI4/conf ~/
