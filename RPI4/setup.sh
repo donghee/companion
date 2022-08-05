@@ -29,3 +29,4 @@ cd ~/
 
 # rtsp-simple-server
 cp -Rf companion/RPI4/conf ~/
+cp companion/RPI4/bin/* ~/bin/
