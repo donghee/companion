@@ -30,3 +30,6 @@ cd ~/
 # rtsp-simple-server
 cp -Rf companion/RPI4/conf ~/
 cp companion/RPI4/bin/* ~/bin/
+
+# gstreamer for rtsp client
+sudo apt-get install gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-tools libgstreamer1.0-dev libgstreamer1.0-0-dbg libgstreamer1.0-0 libgstreamer-plugins-base1.0-dev gtk-doc-tools -y
