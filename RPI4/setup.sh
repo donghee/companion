@@ -1,4 +1,4 @@
-sudo apt-get install python3-dev python3-opencv python3-wxgtk4.0 python3-pip python3-matplotlib python3-lxml libxml2-dev libxslt-dev tmux git python3-pygame -y
+sudo apt-get install python3-dev python3-opencv python3-wxgtk4.0 python3-pip python3-matplotlib python3-lxml libxml2-dev libxslt-dev tmux mosh git python3-pygame -y
 pip3 install PyYAML pyserial mavproxy --user
 
 sudo adduser $USER dialout
