@@ -6,7 +6,7 @@ tar xvfz rtsp-simple-server_v0.19.3_linux_armv7.tar.gz
 chmod +x rtsp-simple-server
 
 # gstreamer rpicamsrc
-sudo apt-get install autoconf automake libtool pkg-config libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libraspberrypi-dev
+sudo apt-get install autoconf automake libtool pkg-config libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libraspberrypi-dev -y
 
 cd ~/
 git clone https://github.com/thaytan/gst-rpicamsrc
