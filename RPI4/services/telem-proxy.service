@@ -1,4 +1,3 @@
-
 [Unit]
 Description=Telemetry Proxy Service
 Wants=network-online.target
