@@ -2,8 +2,8 @@
 
 tmux new -d -s $USER -n "mavproxy"
 #tmux send-keys -t "$USER:mavproxy" 'cd ~; ./mavproxy.sh' Enter
-tmux new-window -n "frp"
-tmux send-keys -t "$USER:frp" 'cd ~; ./frpc.sh' Enter
+#tmux new-window -n "frp"
+#tmux send-keys -t "$USER:frp" 'cd ~; ./frpc.sh' Enter
 tmux new-window -n "streaming"
 #tmux send-keys -t "$USER:streaming" 'cd ~; ./rtsp.sh' Enter
 #tmux send-keys -t "$USER:streaming" 'cd ~; ./rtmp.sh' Enter
