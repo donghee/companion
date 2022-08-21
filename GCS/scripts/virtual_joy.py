@@ -160,6 +160,12 @@ KEY_LIST = [
 	('9', e.KEY_9)
 ]
 
+
+import subprocess
+
+def _active_window_mavproxy_console():
+    return subprocess.check_output(['xdotool', 'windowactivate $(xdotool search -name \"mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550\")']).decode().strip()
+
 # write virtual js
 capabilities = {
         e.EV_ABS: [(e.ABS_X, JOYSTICK_AXIS), (e.ABS_Y, JOYSTICK_AXIS) , (e.ABS_Z, JOYSTICK_AXIS) , (e.ABS_RX, JOYSTICK_AXIS)] , 
@@ -183,7 +189,6 @@ last = {
 }
 
 # read streamdeck 
-
 from streamdeck import streamdeck_init, streamdeck_exit, update_key_image, get_key_style
 
 def send_key_string(key_string):
@@ -193,6 +198,7 @@ def send_key_string(key_string):
         ui.syn()
         ui.write(e.EV_KEY, key_code, 0)
         ui.syn()
+    send_key_string
 
 def key_change_callback(deck, key, state):
     #print("Deck {} Key {} = {}".format(deck.id(), key, state), flush=True)
@@ -218,9 +224,11 @@ def key_change_callback(deck, key, state):
             ui.syn()
 
         if key_style["name"] == "arm":
+            _active_window_mavproxy_console("mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550")
             send_key_string("ARM THROTTLE")
 
         if key_style["name"] == "goto":
+            _active_window_mavproxy_console("mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550")
             send_key_string("GUIDED 100")
 
         if key_style["name"] == "home":
