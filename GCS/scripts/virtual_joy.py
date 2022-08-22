@@ -119,32 +119,32 @@ ALL_JOYSTICK_BUTTONS = [
 
 KEY_LIST = [
 	(' ', e.KEY_SPACE),
-	('A', e.KEY_A),
-	('B', e.KEY_B),
-	('C', e.KEY_C),
-	('D', e.KEY_D),
-	('E', e.KEY_E),
-	('F', e.KEY_F),
-	('G', e.KEY_G),
-	('H', e.KEY_H),
-	('I', e.KEY_I),
-	('J', e.KEY_J),
-	('K', e.KEY_K),
-	('L', e.KEY_L),
-	('M', e.KEY_M),
-	('N', e.KEY_N),
-	('O', e.KEY_O),
-	('P', e.KEY_P),
-	('Q', e.KEY_Q),
-	('R', e.KEY_R),
-	('S', e.KEY_S),
-	('T', e.KEY_T),
-	('U', e.KEY_U),
-	('V', e.KEY_V),
-	('W', e.KEY_W),
-	('X', e.KEY_X),
-	('Y', e.KEY_Y),
-	('Z', e.KEY_Z),
+	('a', e.KEY_A),
+	('b', e.KEY_B),
+	('c', e.KEY_C),
+	('d', e.KEY_D),
+	('e', e.KEY_E),
+	('f', e.KEY_F),
+	('g', e.KEY_G),
+	('h', e.KEY_H),
+	('i', e.KEY_I),
+	('j', e.KEY_J),
+	('k', e.KEY_K),
+	('l', e.KEY_L),
+	('m', e.KEY_M),
+	('n', e.KEY_N),
+	('o', e.KEY_O),
+	('p', e.KEY_P),
+	('q', e.KEY_Q),
+	('r', e.KEY_R),
+	('s', e.KEY_S),
+	('t', e.KEY_T),
+	('u', e.KEY_U),
+	('v', e.KEY_V),
+	('w', e.KEY_W),
+	('x', e.KEY_X),
+	('y', e.KEY_Y),
+	('z', e.KEY_Z),
 	('0', e.KEY_0),
 	('1', e.KEY_1),
 	('2', e.KEY_2),
@@ -200,7 +200,6 @@ def send_key_string(key_string):
         ui.syn()
         ui.write(e.EV_KEY, key_code, 0)
         ui.syn()
-    send_key_string
 
 def key_change_callback(deck, key, state):
     #print("Deck {} Key {} = {}".format(deck.id(), key, state), flush=True)
@@ -215,6 +214,12 @@ def key_change_callback(deck, key, state):
         print("pressed streamdeck key {}", key)
         ui.write(e.EV_KEY, key, 1)
         ui.syn()
+        if key_name == 5:
+            send_key_string("arm throttle")
+
+        if key_name == 6:
+            send_key_string("guided 100")
+
         #_active_window_mavproxy_console()
         #send_key_string("ARM THROTTLE")
         #_active_window_mavproxy_console()
