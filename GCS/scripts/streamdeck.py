@@ -30,40 +30,58 @@ def get_key_style(deck, key, state):
         font = "Roboto-Regular.ttf"
         label = "Bye" if state else "Exit"
     else:
-        name = "emoji"
+        name = key
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
         label = "Pressed!" if state else "Key {}".format(key)
 
     if key == 0:
-        name = "loiter"
+        name = 0
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
         label = "Pressed!" if state else "Loiter"
 
     if key == 1:
-        name = "guided"
+        name = 1
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
         label = "Pressed!" if state else "Guided"
 
     if key == 2:
-        name = "auto"
+        name = 2
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
         label = "Pressed!" if state else "Auto"
 
     if key == 3:
-        name = "arm"
+        name = 3
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "arm"
+        label = "Pressed!" if state else "Circle"
 
     if key == 4:
-        name = "goto"
+        name = 4
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
         label = "Pressed!" if state else "goto"
+
+    if key == 5:
+        name = 5
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "lr"
+
+    if key == 6:
+        name = 6
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "up"
+
+    if key == 7:
+        name = 7
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "rr"
 
     return {
         "name": name,
