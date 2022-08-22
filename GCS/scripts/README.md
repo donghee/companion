@@ -23,3 +23,9 @@ pip3 install streamdeck
 # MAVProxy console 
 
 sudo apt-get install python3-dev python3-opencv python3-wxgtk4.0 python3-pip python3-matplotlib python3-lxml python3-pygame
+
+# SITL
+
+docker run -it --rm -p 5760:5760   -v `pwd`:/ardupilot ardupilot:latest bash
+sudo pip3 install mavproxy
+sim_vehicle.py -v ArduCopter --no-mavproxy
