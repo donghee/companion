@@ -25,7 +25,7 @@ def get_key_style(deck, key, state):
     exit_key_index = deck.key_count() - 1
 
     if key == exit_key_index:
-        name = "exit"
+        name = exit_key_index
         icon = "{}.png".format("Exit")
         font = "Roboto-Regular.ttf"
         label = "Bye" if state else "Exit"

@@ -211,7 +211,8 @@ def key_change_callback(deck, key, state):
         key_name = key_style["name"]
 
         key = ALL_JOYSTICK_BUTTONS[key_name+13]
-        print("pressed streamdeck key {}", key)
+        #print("pressed streamdeck key {}", key)
+
         ui.write(e.EV_KEY, key, 1)
         ui.syn()
         if key_name == 5:
@@ -234,7 +235,8 @@ def key_change_callback(deck, key, state):
         key_name = key_style["name"]
 
         key = ALL_JOYSTICK_BUTTONS[key_name+13]
-        print("released streamdeck key {}", key)
+        #print("released streamdeck key {}", key)
+
         ui.write(e.EV_KEY, key, 0)
         ui.syn()
 
