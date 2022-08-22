@@ -29,6 +29,11 @@ def get_key_style(deck, key, state):
         icon = "{}.png".format("Exit")
         font = "Roboto-Regular.ttf"
         label = "Bye" if state else "Exit"
+    else:
+        name = "emoji"
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Key {}".format(key)
 
     if key == 0:
         name = "loiter"

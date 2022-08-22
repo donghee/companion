@@ -179,7 +179,7 @@ devices = [InputDevice(path) for path in list_devices()]
 for device in devices:
     print(device.path, device.name, device.phys)
 
-gamepad = InputDevice('/dev/input/event2')
+gamepad = InputDevice('/dev/input/event9')
 
 last = {
     "ABS_X": 1000, # yaw
@@ -224,11 +224,11 @@ def key_change_callback(deck, key, state):
             ui.syn()
 
         if key_style["name"] == "arm":
-            _active_window_mavproxy_console("mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550")
+            _active_window_mavproxy_console()
             send_key_string("ARM THROTTLE")
 
         if key_style["name"] == "goto":
-            _active_window_mavproxy_console("mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550")
+            _active_window_mavproxy_console()
             send_key_string("GUIDED 100")
 
         if key_style["name"] == "home":
