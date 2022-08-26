@@ -63,7 +63,7 @@ def get_key_style(deck, key, state):
         name = 4
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "goto"
+        label = "Pressed!" if state else "Pos Hold"
 
     if key == 5:
         name = 5

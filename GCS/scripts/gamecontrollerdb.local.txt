@@ -1,0 +1,1 @@
+03000000830400002057000000010000,FrSky Simulator,platform:Linux,a:a6,b:a4,x:a5,leftx:a3,lefty:a2~,rightx:a1,righty:a0~,lefttrigger:a6,
