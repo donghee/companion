@@ -1,6 +1,6 @@
 #!/bin/sh
 STREAM_URL="rtsp://127.0.0.1:8554"
-STREAM_KEY="test"
+STREAM_KEY="cam1"
 
 x=1
 while [ $x -le 100000 ]

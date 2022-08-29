@@ -161,6 +161,13 @@ hlsServerCert: /home/pi/conf/server.crt
 # The settings under the path "all" are applied to all paths that do not match
 # another entry.
 paths:
+  cam2:
+    source: rtsp://192.168.144.25:8554/main.264
+    sourceProtocol: tcp
+    sourceOnDemand: yes
+  redirected:
+    source: redirect
+    sourceRedirect: rtsp://192.168.144.25:8554/main.264
   all:
     # Source of the stream. This can be:
     # * publisher -> the stream is published by a RTSP or RTMP client
