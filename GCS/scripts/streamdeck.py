@@ -39,7 +39,7 @@ def get_key_style(deck, key, state):
         name = 0
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "Loiter"
+        label = "Pressed!" if state else "None"
 
     if key == 1:
         name = 1
@@ -63,25 +63,63 @@ def get_key_style(deck, key, state):
         name = 4
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "Pos Hold"
+        label = "Pressed!" if state else "Loiter"
 
     if key == 5:
         name = 5
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "lr"
+        label = "Pressed!" if state else "guided 100"
 
     if key == 6:
         name = 6
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "up"
+        label = "Pressed!" if state else "Gimbal Up"
 
     if key == 7:
         name = 7
         icon = "{}.png".format("Pressed" if state else "Released")
         font = "Roboto-Regular.ttf"
-        label = "Pressed!" if state else "rr"
+        label = "Pressed!" if state else "Gimbal Down"
+
+    if key == 8:
+        name = 8
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Zoom In"
+
+    if key == 9:
+        name = 9
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Zoom Out"
+
+    if key == 10:
+        name = 10 
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Cam1 Tilt"
+
+    if key == 11:
+        name = 11 
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Gimbal Left"
+
+    if key == 12:
+        name = 12 
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Gimbal Right"
+
+    if key == 13:
+        name = 13 
+        icon = "{}.png".format("Pressed" if state else "Released")
+        font = "Roboto-Regular.ttf"
+        label = "Pressed!" if state else "Gimbal Center"
+
+
 
     return {
         "name": name,

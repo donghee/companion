@@ -1,10 +1,15 @@
 from evdev import InputDevice, list_devices, categorize, KeyEvent, UInput, AbsInfo, ecodes as e
 import time
+import subprocess
 
 JOYSTICK_AXIS = AbsInfo(
         value = 0,
-        min = 0,
-        max = 2000,
+# frsky taranis
+#        min = 0,
+#        max = 2000,
+# flysky
+        min = -32767,
+        max = 32767,
         fuzz = 0,
         flat = 15,
         resolution = 0
@@ -159,9 +164,6 @@ KEY_LIST = [
 	('9', e.KEY_9)
 ]
 
-
-import subprocess
-
 def _active_window_mavproxy_console():
     return subprocess.check_output(['xdotool', 'windowactivate $(xdotool search -name \"mavproxy.py --master=tcp:127.0.0.1:5760 --out=udp:0.0.0.0:14550\")']).decode().strip()
 
@@ -181,17 +183,21 @@ print(ui)
 devices = [InputDevice(path) for path in list_devices()]
 frsky_device_path = ''
 specktrum_device_path = ''
+flysky_device_path = ''
 for device in devices:
     print(device.path, device.name, device.phys)
     if 'FrSky' in device.name:
         frsky_device_path = device.path
     if 'SPEKTRUM' in device.name:
         specktrum_device_path = device.path
+    if 'Arduino' in device.name:
+        flysky_device_path = device.path
 
 # Open FrSky Simulator USB
 #gamepad = InputDevice(frsky_device_path) # taranis /dev/input/event6
-
-gamepad = InputDevice(specktrum_device_path) 
+#gamepad = InputDevice(specktrum_device_path) 
+print(flysky_device_path)
+gamepad = InputDevice(flysky_device_path) 
 
 last = {
     "ABS_X": 1000, # yaw
@@ -211,10 +217,15 @@ def send_key_string(key_string):
         key_code = [x[1] for x in KEY_LIST if x[0] == key][0]
         ui.write(e.EV_KEY, key_code, 1)
         ui.syn()
+        time.sleep(0.0025)
         ui.write(e.EV_KEY, key_code, 0)
         ui.syn()
+        time.sleep(0.0025)
+
+gimbal_previous_command = 0
 
 def key_change_callback(deck, key, state):
+    global gimbal_previous_command
     #print("Deck {} Key {} = {}".format(deck.id(), key, state), flush=True)
 
     update_key_image(deck, key, state)
@@ -233,38 +244,71 @@ def key_change_callback(deck, key, state):
 
         # pitch up
         if key_name == 6: 
-            send_key_string("rc 11 1800 ↵")
-            time.sleep(0.2)
-            send_key_string("rc 11 1500 ↵")
-            send_key_string("↵")
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 10 1500 ↵") # stop
+                gimbal_previous_command = 0 # init gimbal command
+            else:
+                send_key_string("servo set 10 1600 ↵") # pitch up
+                gimbal_previous_command = key_name
 
         # pitch down
         if key_name == 7:
-            send_key_string("rc 11 1200 ↵")
-            time.sleep(0.2)
-            send_key_string("rc 11 1500 ↵")
-            send_key_string("↵")
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 10 1500 ↵") # stop
+                gimbal_previous_command = 0 # init gimbal command
+            else:
+                send_key_string("servo set 10 1400 ↵") # pitch down
+                gimbal_previous_command = key_name
 
         # zoom in
         if key_name == 8: 
-            send_key_string("rc 14 1200 ↵")
-            time.sleep(0.2)
-            send_key_string("rc 14 1500 ↵")
-            send_key_string("↵")
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 11 1500 ↵") # stop
+                gimbal_previous_command = 0 # init gimbal command
+            else:
+                send_key_string("servo set 11 1000 ↵") # zoom in
+                gimbal_previous_command = key_name
 
         # zoom out
         if key_name == 9:
-            send_key_string("rc 14 1800 ↵")
-            time.sleep(0.2)
-            send_key_string("rc 14 1500 ↵")
-            send_key_string("↵")
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 11 1500 ↵") # stop
+                gimbal_previous_command = 0 # init gimbal command
+            else:
+                send_key_string("servo set 11 2000 ↵") # zoom out
+                gimbal_previous_command = key_name
 
-        # center
+        # cam1 servo
         if key_name == 10:
-            send_key_string("rc 13 2000 ↵")
-            time.sleep(0.2)
-            send_key_string("rc 13 1500 ↵")
-            send_key_string("↵")
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 9 1200 ↵") # cam1 front
+                gimbal_previous_command = 0 
+            else:
+                send_key_string("servo set 9 1800 ↵") # cam1 bottom
+                gimbal_previous_command = key_name
+
+        # Gimbal Yaw Left
+        if key_name == 11:
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 12 1500 ↵") # stop
+                gimbal_previous_command = 0 
+            else:
+                send_key_string("servo set 12 1400 ↵") # gimbal yaw left
+                gimbal_previous_command = key_name
+
+        # Gimbal Yaw Right
+        if key_name == 12:
+            if gimbal_previous_command == key_name:
+                send_key_string("servo set 12 1500 ↵") # stop
+                gimbal_previous_command = 0 
+            else:
+                send_key_string("servo set 12 1600 ↵") # gimbal yaw right
+                gimbal_previous_command = key_name
+
+        # Gimbal Center
+        if key_name == 13:
+            send_key_string("servo set 13 2000 ↵") # gimbal center
+            send_key_string("servo set 13 1500 ↵") 
 
         #_active_window_mavproxy_console()
         #send_key_string("ARM THROTTLE")
@@ -311,51 +355,61 @@ ui.syn()
 for event in gamepad.read_loop():
     if event.type == e.EV_ABS:
         absevent = categorize(event)
-        print(e.bytype[absevent.event.type][absevent.event.code])
+        #print(e.bytype[absevent.event.type][absevent.event.code])
 
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_X':
-            last["ABS_X"] = absevent.event.value
-            #ui.write(e.EV_ABS, e.ABS_X, absevent.event.value)
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Y':
-            last["ABS_Y"] = absevent.event.value
-            #ui.write(e.EV_ABS, e.ABS_Y, absevent.event.value)
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Z':
+        # joystic frsky taranis
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_X':
+#            last["ABS_X"] = absevent.event.value
+#            #ui.write(e.EV_ABS, e.ABS_X, absevent.event.value)
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Y':
+#            last["ABS_Y"] = absevent.event.value
+#            #ui.write(e.EV_ABS, e.ABS_Y, absevent.event.value)
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Z':
+#            last["ABS_RX"] = absevent.event.value
+#            #ui.write(e.EV_ABS, e.ABS_Z, absevent.event.value)
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RX':
+#            last["ABS_RY"] = absevent.event.value
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RY':
+#            last["ABS_Z"] = absevent.event.value
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RZ':
+#            last["ABS_RZ"] = absevent.event.value
+#        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_THROTTLE':
+#            last["ABS_THROTTLE"] = absevent.event.value
+
+        # joystic flysky mode-2
+        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_X': # roll *
             last["ABS_RX"] = absevent.event.value
-            #ui.write(e.EV_ABS, e.ABS_Z, absevent.event.value)
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RX':
+        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Y': # pitch *
             last["ABS_RY"] = absevent.event.value
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RY':
-            last["ABS_Z"] = absevent.event.value
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RZ':
-            last["ABS_RZ"] = absevent.event.value
-        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_THROTTLE':
-            last["ABS_THROTTLE"] = absevent.event.value
-            #ui.write(e.EV_ABS, e.ABS_RX, absevent.event.value)
-        #if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RY':
-            #last["ABS_RY"] = absevent.event.value
-        #if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RZ':
-            #last["ABS_RZ"] = absevent.event.value
- 
-        print(last)
+        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_Z': # throttle *
+            last["ABS_Y"] = -absevent.event.value
+        if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RX': # yaw *
+            last["ABS_X"] = absevent.event.value
+
+        #if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RY': # SWC+SWD
+            #pass
+        #if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_RZ': # VRA
+            #pass
+        #if e.bytype[absevent.event.type][absevent.event.code] == 'ABS_THROTTLE': # VRB
+            #pass
+
+        #print(last)
         ui.write(e.EV_ABS, e.ABS_X, last["ABS_X"])
         ui.syn()
         ui.write(e.EV_ABS, e.ABS_Y, last["ABS_Y"])
         ui.syn()
-        ui.write(e.EV_ABS, e.ABS_Z, last["ABS_Z"])
-        ui.syn()
+        #ui.write(e.EV_ABS, e.ABS_Z, last["ABS_Z"])
+        #ui.syn()
         ui.write(e.EV_ABS, e.ABS_RX, last["ABS_RX"])
         ui.syn()
         ui.write(e.EV_ABS, e.ABS_RY, last["ABS_RY"])
         ui.syn()
-        ui.write(e.EV_ABS, e.ABS_RZ, last["ABS_RZ"])
-        ui.syn()
-        ui.write(e.EV_ABS, e.ABS_THROTTLE, last["ABS_THROTTLE"])
-        ui.syn()
-
+        #ui.write(e.EV_ABS, e.ABS_RZ, last["ABS_RZ"])
+        #ui.syn()
+        #ui.write(e.EV_ABS, e.ABS_THROTTLE, last["ABS_THROTTLE"])
+        #ui.syn()
  
 ui.close()
 
 deck.reset()     
 deck.close()
-
-
