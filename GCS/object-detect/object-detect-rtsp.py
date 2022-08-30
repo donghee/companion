@@ -1,14 +1,17 @@
 import cv2
 import numpy as np
 import subprocess
+from time import sleep
  
-filename = 'rtsp://223.171.56.36:8554/test'
-filename = 'rtsp://127.0.0.1:8554/proxied'
+filename = 'rtsp://223.171.56.36:8554/cam1'
+filename = 'rtsp://127.0.0.1:8554/cam1'
 file_size = (1280,720)
 
-fps = 20
-width = 640
-height = 360
+fps = 5
+#width = 640
+#height = 360
+width = 1280
+height = 720
 file_size = (width, height)
  
 RESIZED_DIMENSIONS = (300, 300)
@@ -33,7 +36,7 @@ bbox_colors = np.random.uniform(255, 0, size=(len(categories), 3))
 
 out = cv2.VideoWriter('appsrc ! videoconvert' + \
     ' ! x264enc speed-preset=ultrafast bitrate=600 key-int-max=40' + \
-    ' ! rtspclientsink location=rtsp://localhost:8554/test',
+    ' ! rtspclientsink location=rtsp://localhost:8554/cam1-ai',
     cv2.CAP_GSTREAMER, 0, fps, file_size, True)
 
 def main():
@@ -43,7 +46,6 @@ def main():
     success, frame = cap.read() 
 
     if success:
-         
       (h, w) = frame.shape[:2]
  
       # Create a blob. A blob is a group of connected pixels in a binary 
@@ -89,12 +91,13 @@ def main():
  
       cv2.imshow('frame', frame)
       #out.write(frame)
-      if cv2.waitKey(1) == ord('q'):
+      if cv2.waitKey(1) == 27: # ESC
+          cv2.destroyAllWindows()
           break
-         
-    # No more video frames left
-    else:
-      break
+
+    #sleep(1 / fps)
+    #else:
+      #break
              
   # Stop when the video is finished
   cap.release()
